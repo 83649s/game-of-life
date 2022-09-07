@@ -1,10 +1,12 @@
+import sys
 import random as rand
 
 
 def main():
-    height = 10
-    width = 10
-    number_of_generations = 100
+    parameters = handle_arguments()
+    width = parameters[0]
+    height = parameters[1]
+    number_of_generations = parameters[2]
 
     grid = create_grid(width, height)
     display_grid(grid, 0)
@@ -66,6 +68,16 @@ def number_of_live_adjacent_cells(grid: list, x_pos: int, y_pos: int, grid_width
                 live_cell_count += 1
 
     return live_cell_count
+
+
+def handle_arguments() -> list:
+    flags = ['-w', '-h', '-g']
+    parameters = []
+    for index, argument in enumerate(sys.argv):
+        for flag_index, flag in enumerate(flags):
+            if argument == flag:
+                parameters.append(int(sys.argv[index + 1]))
+    return parameters
 
 
 if __name__ == '__main__':
